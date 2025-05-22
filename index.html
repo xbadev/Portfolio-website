@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Bader Alansari" />
+  <title>Bader Alansari | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="boot-screen">
+    <p class="boot-line">Welcome to BaderOS v0.1</p>
+    <p class="boot-line">Initializing system<span class="blink">█</span></p>
+    <button id="boot-btn">Boot System</button>
+  </div>
+
+  <canvas id="matrix-canvas"></canvas>
+
+  <div id="intro" class="hidden">
+    <div class="glitch-bg scanLines"></div>
+    <h1 class="electric-glow" id="intro-text"></h1>
+    <div class="loading-bar"><div class="fill"></div></div>
+  </div>
+
+  <div id="main-content" style="display:none;">
+    <div id="stars"></div>
+   <header>
+    <nav class="top-nav">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div id="hero">
+      <h1>Bader Alansari</h1>
+      <p id="hero-tagline">Info‑Systems student • Frontend & Cloud fan</p>
+    </div>
+   </header>
+
+   <div class="sections">
+    <section id="about">
+     <h2><i class="fas fa-user"></i> About Me</h2>
+     <p>I'm Bader, an Information Systems student passionate about frontend, networking, and cloud. This is my first personal project, and I'm excited to keep learning and building cool stuff!</p>
+    </section>
+
+   <section id="skills">
+    <h2><i class="fas fa-tools"></i> Skills</h2>
+    <div class="skill-chip">HTML</div>
+    <div class="skill-chip">CSS</div>
+    <div class="skill-chip">JavaScript</div>
+    <div class="skill-chip">Java</div>
+    <div class="skill-chip">Python</div>
+    <div class="skill-chip">Linux, Virtual Machines</div>
+   </section>
+
+   <section id="projects">
+    <h2>Projects</h2>
+    <p>Coming soon! Stay tuned :)</p>
+   </section>
+
+   <section id="education">
+    <h2>Education</h2>
+    <p>Coming soon! Stay tuned :)</p>
+   </section>
+
+   <section id="contact">
+    <h2>Contact Me</h2>
+    <p>Email: bader.alansari@stonybrook.edu</p>
+        <a class="linkedin" href = "https://www.linkedin.com/in/bader-alansari-sbu/" target = "_blank" rel = "noopener noreferrer">
+        <i class = "fab fa-linkedin"></i>Linkedin</a>
+   </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Bader Alansari</p>
+  </footer>
+  </div>
+  
+  <script type="module" src="script.js"></script>
+</body>
+</html>

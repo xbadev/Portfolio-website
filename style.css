@@ -1,0 +1,387 @@
+#boot-screen {
+  position: fixed; inset: 0;
+  background-color: #000; color: #00ff00;
+  font-family: 'Courier New', monospace; font-size: 1rem;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  z-index: 9999;
+}
+
+.boot-line {
+  margin: 8px 0;
+}
+
+.blink {
+  animation: blinkCursor 1s infinite;
+}
+@keyframes blinkCursor {
+  0%, 50%, 100% { opacity: 0; }
+  25%, 75% { opacity: 1; }
+}
+
+#boot-btn {
+  margin-top: 20px;
+  background: none;
+  border: 2px solid #00ff00;
+  padding: 8px 20px;
+  color: #00ff00;
+  font-family: inherit;
+  cursor: pointer;
+  animation: flicker 2.5s infinite;
+}
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 58%, 71%, 73%, 87%, 89%, 90%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55%, 72%, 88% {
+    opacity: 0;                                               
+  }
+}
+
+#boot-btn:hover {
+  background: #00ff95;
+  color: #000;
+  box-shadow: 0 0 20px #00ff95, 0 0 40px #00ff95;
+  animation: glitchShake 0.2s infinite;
+}
+@keyframes glitchShake {
+  0% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(-2px, 2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+#matrix-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh; z-index: 3000; /* Above everything */
+  background: rgba(0, 0, 0, 0.9); /* dark backdrop */
+  pointer-events: none; /* So user can't click while matrix is active */
+  opacity: 0;
+}
+
+/*==== INTRO PAGE (LOADING)====*/         
+#intro {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background-color: #080015;
+  z-index: 2000;
+  overflow: hidden;
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 2px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.glitch-bg {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: transparent;
+  z-index: 100000;
+  pointer-events: none;
+  animation: flickerBG 1.5s infinite alternate;
+}
+@keyframes flickerBG {
+  from { filter: brightness(0.9) hue-rotate(0deg); }
+  to { filter: brightness(1.1) hue-rotate(5deg); }
+}
+
+.scanLines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03),rgba(255, 255, 255, 0.03) 1px,transparent 1px,transparent 3px);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.electric-glow {
+  position: relative;
+  color: #00ffff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10;
+  text-shadow: 
+    0 0 3px #00ffff,
+    0 0 8px #00ccee,
+    0 0 15px #00aadd,
+    0 0 20px #0088cc;
+  animation: pulseGlowBaseText 0.8s infinite alternate;
+  margin-bottom: 1.5rem;
+  max-width: 90%;
+}
+@keyframes pulseGlowBaseText {
+  from {
+    text-shadow: 
+      0 0 10px #00ffff,
+      0 0 20px #00ccee,
+      0 0 30px #00aadd,
+      0 0 40px #0088cc;
+  }
+  to {
+    text-shadow: 
+      0 0 20px #00ffff,
+      0 0 30px #00ccee,
+      0 0 40px #00aadd,
+      0 0 50px #0088cc;
+  }
+}
+
+.loading-bar {
+  width: 300px;
+  max-width: 80%;
+  height: 10px;
+  background: #222;
+  border: 2px solid #00f7ff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+  box-shadow: 0 0 10px #00f7ff;
+  position: relative;
+  z-index: 10;
+}
+
+.loading-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent, transparent 10px,rgba(0, 247, 255, 0.1) 10px, rgba(0, 247, 255, 0.1) 20px);
+  animation: staticMove 0.5s linear infinite;
+}
+@keyframes staticMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+.fill {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00f7ff, #0ff, #00f7ff);
+  position: relative;
+  overflow: hidden;
+  animation: fillBar 2s forwards;
+}
+@keyframes fillBar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+#intro.fade-in {
+  display: flex !important;
+  animation: fadeInGlow 1s ease forwards;
+}
+@keyframes fadeInGlow {
+  0% {
+    opacity: 0;
+    filter: brightness(180%) blur(5px);
+  }
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+#intro.fade-out {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.hidden {
+  display: none !important;
+  opacity: 0;
+}
+
+/* ==== GLOBAL RESET ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Press Start 2P', monospace;
+  background-color: #0d011d;
+  color: #00f5ff;
+  overflow-x: hidden;
+}
+
+#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  opacity: 0;
+  border-radius: 50%;
+  animation: twinkle infinite alternate;
+}
+@keyframes twinkle {
+  from {opacity: 0.3;}
+  to {opacity: 0.8;}
+}
+
+/* ==== NAVIGATION ==== */
+.top-nav {
+  background-color: #130025;
+  padding: 1rem 2rem;
+  text-align: center;
+  border-bottom: 3px solid #ff00ff;
+  box-shadow: 0 0 10px #ff00ff;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.3rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #38bdf8;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff;
+}
+
+/* ==== HERO ==== */
+#hero {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: radial-gradient(#000000, #0f002d);
+  color: #00f5ff;
+  text-shadow: 0 0 10px #00f5ff;
+}
+
+#hero h1 {
+  margin-top: 2rem;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  animation: pulseGlowMain 1.5s infinite ease-in-out;
+}
+@keyframes pulseGlowMain {
+  0%, 100% { text-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff, 0 0 30px #ff00ff; }
+  50% { text-shadow: 0 0 20px #00f5ff, 0 0 30px #00f5ff, 0 0 40px #ff00ff; }
+}
+
+#hero-tagline {
+  font-size: 1rem;
+  color: #ffd6ff;
+}
+
+/* ==== SECTIONS WRAPPER ==== */
+.sections {
+  padding: 3rem 1rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* ==== SECTIONS ==== */
+section {
+  background-color: rgba(5, 0, 20, 0.7);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-left: 6px solid #ff00ff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #ff00ff33;
+  transition: transform 0.3s;
+}
+
+section:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px #ff00ff;
+}
+
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #00f5ff;
+}
+
+section p {
+  font-size: 0.75rem;
+  line-height: 2;
+  color: #eee;
+}
+
+/* ==== SKILLS ==== */
+.skill-chip {
+  display: inline-block;
+  background-color: #130025;
+  color: #00f5ff;
+  border: 1px solid #ff00ff;
+  padding: 0.5rem 1rem;
+  margin: 0.4rem;
+  border-radius: 4px;
+  box-shadow: 0 0 6px #ff00ff;
+  font-size: 0.75rem;
+}
+
+.skill-chip:hover {
+  background-color: #ff00ff;
+  color: #130025;
+}
+
+/* ==== CONTACT ==== */
+.linkedin {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.linkedin:hover {
+  color: #ff00ff;
+  text-shadow: 0 0 6px #ff00ff;
+  text-decoration: underline;
+}
+
+i.fa-linkedin {
+  position: relative;
+  bottom: 3px;
+  right: 3px;
+}
+
+/* ==== FOOTER ==== */
+footer {
+  text-align: center;
+  border-top: 2px solid #ff00ff;
+  padding: 1rem;
+  font-size: 0.7rem;
+  color: #999;
+  background-color: #130025;
+  margin-top: 8em;
+  box-shadow: 0 -2px 10px #ff00ff;
+}
